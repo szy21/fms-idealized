@@ -9,7 +9,7 @@
 #SBATCH --export=ALL
 #SBATCH --partition=any
 #SBATCH --mail-user=zhaoyi@caltech.edu   # email address
-#SBATCH --mail-type=BEGIN
+##SBATCH --mail-type=BEGIN
 #SBATCH --mail-type=END
 #SBATCH --mail-type=FAIL
 
@@ -69,7 +69,7 @@ set input_dir      = ${scratch_dir}/combine                     # directory wher
 set output_dir     = ${scratch_dir}/history                     # directory where output is written
 
 set src_dir        = $analysis_dir/src           # prefix for path_names
-set exe_dir        = $run_analysis/exe.analysis                 # executable directory
+set exe_dir        = $run_analysis/${date_name}/exe.analysis                 # executable directory
 set executable     = analysis                                   # executable name
 set mppnccombine   = ${tmpdir}/mppnccombine.ifc # path to the combine executable
 set include_dir    = $fms_home/bin/nc_inc 
@@ -215,7 +215,7 @@ if ( $successful_analysis == 1 ) then
 
   # copy run script and srcmods to a tar file in output (overwrite this file with each submission of this run)
   cd $fms_home:h/exp/${exp_name}/
-  tar czvf ${data_dir}/scripts.tgz run/run_${run_name} srcmods/
+  tar czvf ${data_dir}/scripts.tgz run/${run_script:t} srcmods/
 
 endif
 
@@ -261,5 +261,5 @@ end
 #rm $run_analysis/$date_name/$executable
 #rm $run_analysis/$date_name/diag_table
 #rm $run_analysis/$date_name/input.nml
-
+rm -f $exe_dir/*
 
