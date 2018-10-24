@@ -69,7 +69,7 @@ set input_dir      = ${scratch_dir}/combine                     # directory wher
 set output_dir     = ${scratch_dir}/history                     # directory where output is written
 
 set src_dir        = $analysis_dir/src           # prefix for path_names
-set exe_dir        = $run_analysis/${date_name}/exe.analysis                 # executable directory
+set exe_dir        = $run_analysis/exe.analysis                 # executable directory
 set executable     = analysis                                   # executable name
 set mppnccombine   = ${tmpdir}/mppnccombine.ifc # path to the combine executable
 set include_dir    = $fms_home/bin/nc_inc 
@@ -104,15 +104,15 @@ end
 set successful_analysis = 1 # this gets set to 0 if an indicator suggests any instance of analysis failed.
 
 # Build analysis code
-if ( ! -d $exe_dir ) mkdir -p $exe_dir
+#if ( ! -d $exe_dir ) mkdir -p $exe_dir
 if ( ! -d $output_dir )  mkdir $output_dir
 cd $exe_dir
 # create make file
 # append fms_home (containing netcdf libraries and include files) to template
-echo "fms_home =  $fms_home" > $exe_dir/tmp_template
-/bin/cat $template >> $exe_dir/tmp_template
-mkmf -a $src_dir -c"-Daix" -t $exe_dir/tmp_template -p $executable $pathnames $include_dir
-make $executable
+#echo "fms_home =  $fms_home" > $exe_dir/tmp_template
+#/bin/cat $template >> $exe_dir/tmp_template
+#mkmf -a $src_dir -c"-Daix" -t $exe_dir/tmp_template -p $executable $pathnames $include_dir
+#make $executable
 cp $executable $run_analysis/$date_name
 cp $diag_table $run_analysis/$date_name/diag_table
 
@@ -258,8 +258,7 @@ end
 #endif
 
 # clean up
-#rm $run_analysis/$date_name/$executable
-#rm $run_analysis/$date_name/diag_table
-#rm $run_analysis/$date_name/input.nml
-rm -f $exe_dir/*
+rm $run_analysis/$date_name/$executable
+rm $run_analysis/$date_name/diag_table
+rm $run_analysis/$date_name/input.nml
 
